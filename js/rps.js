@@ -146,6 +146,50 @@ function game(player_choice) {
     };
 }
 
+function check_scores(player_score, computer_score, rnds) {
+    if (player_score === 5 || computer_score === 5) {
+        switch (true) {
+            case player_score === computer_score:
+                final_result.textContent = `A tie!, you've won ${player_score} times out of ${rounds}!!!`;
+                choices.appendChild(final_result);
+
+                player_score = 0;
+                computer_score = 0;
+                rnds = 0;
+                break;
+
+            case player_score > computer_score:
+                final_result.textContent = `Congrats, you've won ${player_score} times out of ${rounds}!!!`;
+                choices.appendChild(final_result);
+
+                player_score = 0;
+                computer_score = 0;
+                rnds = 0;
+                break;
+
+            case player_score < computer_score:
+                final_result.textContent = `What a shame, you've lost ${computer_score} times out of ${rounds}.`;
+                choices.appendChild(final_result);
+
+                player_score = 0;
+                computer_score = 0;
+                rnds = 0;
+                break;
+
+            default:
+                return "Problem with the get_choice() function";
+        }
+    } else if (choices.contains(final_result)) {
+        choices.removeChild(final_result);
+    }
+
+    return {
+        player_score: player_score,
+        computer_score: computer_score,
+        rounds: rnds,
+    };
+}
+
 function get_choice(e) {
     let scores = game(e.target.textContent.toLowerCase());
 
@@ -159,41 +203,11 @@ function get_choice(e) {
     p_score.textContent = `You: ${player_score}`;
 
     // Displays the final result message
-    if (player_score === 5 || computer_score === 5) {
-        switch (true) {
-            case player_score === computer_score:
-                final_result.textContent = `A tie!, you've won ${player_score} times out of ${rounds}!!!`;
-                choices.appendChild(final_result);
+    let scrs = check_scores(player_score, computer_score, rounds);
 
-                player_score = 0;
-                computer_score = 0;
-                rounds = 0;
-                return;
-
-            case player_score > computer_score:
-                final_result.textContent = `Congrats, you've won ${player_score} times out of ${rounds}!!!`;
-                choices.appendChild(final_result);
-
-                player_score = 0;
-                computer_score = 0;
-                rounds = 0;
-                return;
-
-            case player_score < computer_score:
-                final_result.textContent = `What a shame, you've lost ${computer_score} times out of ${rounds}.`;
-                choices.appendChild(final_result);
-
-                player_score = 0;
-                computer_score = 0;
-                rounds = 0;
-                return;
-
-            default:
-                return "Problem with the get_choice() function";
-        }
-    } else if (choices.contains(final_result)) {
-        choices.removeChild(final_result);
-    }
+    player_score = scrs.player_score;
+    computer_score = scrs.computer_score;
+    rounds = scrs.rounds;
 }
 
 let player_score = 0;
