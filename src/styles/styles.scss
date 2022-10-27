@@ -11,6 +11,10 @@ body {
     background: c.$dark_background
 }
 
+button {
+    border: none;
+}
+
 header {
     background: c.$light_background;
     padding: .7rem;
@@ -28,5 +32,35 @@ header {
         img {
             width: 50px;
         }
+    }
+}
+
+.choices {
+    display: flex;
+    gap: 1rem;
+}
+
+.card {
+    width: 20%;
+
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: center;
+    gap: 1rem;
+
+    background: c.$lavender;
+    border-radius: 10px;
+
+    &:hover {
+        background: darken(c.$lavender, 15%) 
+
+    }
+
+    .symbol {
+        font-size: 15rem;
+    }
+
+    .type {
+        font-size: 2rem;
     }
 }

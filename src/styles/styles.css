@@ -9,6 +9,10 @@ body {
   background: #02182B;
 }
 
+button {
+  border: none;
+}
+
 header {
   background: #95A3B3;
   padding: 0.7rem;
@@ -24,6 +28,30 @@ header .links {
 }
 header .links img {
   width: 50px;
+}
+
+.choices {
+  display: flex;
+  gap: 1rem;
+}
+
+.card {
+  width: 20%;
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: center;
+  gap: 1rem;
+  background: #D0C4DF;
+  border-radius: 10px;
+}
+.card:hover {
+  background: #a892c4;
+}
+.card .symbol {
+  font-size: 15rem;
+}
+.card .type {
+  font-size: 2rem;
 }
 
 /*# sourceMappingURL=styles.css.map */
