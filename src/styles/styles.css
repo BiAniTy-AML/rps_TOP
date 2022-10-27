@@ -68,6 +68,7 @@ header .links img {
   border-radius: 10px;
 }
 .card:not(.random):hover {
+  cursor: pointer;
   animation: card 3s infinite;
 }
 .card:hover {

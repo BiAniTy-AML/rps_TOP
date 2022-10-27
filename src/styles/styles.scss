@@ -104,7 +104,9 @@ header {
     border-radius: 10px;
 
     &:not(.random):hover {
+        cursor: pointer;
         animation: card 3s infinite;
+
     }
 
     &:hover {

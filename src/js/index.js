@@ -1,4 +1,6 @@
-import '../styles/styles.css';
+import DOM_el from "./DOM_elements";
+
+import "../styles/styles.css";
 
 // The computer randomly chooses rock, paper or scissors
 function computer_play() {
@@ -6,16 +8,16 @@ function computer_play() {
 
     switch (comp_choice) {
         case 0:
-            return 'Rock';
+            return "Rock";
 
         case 1:
-            return 'Scissors';
+            return "Scissors";
 
         case 2:
-            return 'Paper';
+            return "Paper";
 
         default:
-            return 'Something went wrong with the function computer_play';
+            return "Something went wrong with the function computer_play";
     }
 }
 
@@ -32,7 +34,7 @@ function play_round(player_choice) {
     player.textContent = `You: ${player_choice}`;
     comp.textContent = `Computer: ${computer_choice}`;
 
-    let res;
+    let res = null;
 
     // Return the results after comparing the choices
     switch (true) {
@@ -43,45 +45,45 @@ function play_round(player_choice) {
             return res;
 
         // Depending on the player's choice, compare with the computer's and call the results() function
-        case player_choice === 'rock':
+        case player_choice === "rock":
             switch (computer_choice) {
-                case 'scissors':
+                case "scissors":
                     res = results(player_choice, computer_choice, true);
                     result_round.textContent = res;
                     choices.appendChild(result_round);
                     return res;
 
-                case 'paper':
+                case "paper":
                     res = results(player_choice, computer_choice, false);
                     result_round.textContent = res;
                     choices.appendChild(result_round);
                     return res;
             }
 
-        case player_choice === 'paper':
+        case player_choice === "paper":
             switch (computer_choice) {
-                case 'scissors':
+                case "scissors":
                     res = results(player_choice, computer_choice, false);
                     result_round.textContent = res;
                     choices.appendChild(result_round);
                     return res;
 
-                case 'rock':
+                case "rock":
                     res = results(player_choice, computer_choice, true);
                     result_round.textContent = res;
                     choices.appendChild(result_round);
                     return res;
             }
 
-        case player_choice === 'scissors':
+        case player_choice === "scissors":
             switch (computer_choice) {
-                case 'rock':
+                case "rock":
                     res = results(player_choice, computer_choice, false);
                     result_round.textContent = res;
                     choices.appendChild(result_round);
                     return res;
 
-                case 'paper':
+                case "paper":
                     res = results(player_choice, computer_choice, true);
                     result_round.textContent = res;
                     choices.appendChild(result_round);
@@ -89,7 +91,7 @@ function play_round(player_choice) {
             }
 
         default:
-            return 'Problem with the play_round() function';
+            return "Problem with the play_round() function";
     }
 }
 
@@ -124,27 +126,27 @@ function game(player_choice) {
     // console.log(result);
 
     switch (result.substr(4, 4)) {
-        case 'won!':
+        case "won!":
             rounds++;
             player_score++;
             break;
 
-        case 'lost':
+        case "lost":
             computer_score++;
             rounds++;
             break;
 
-        case ' a t':
+        case " a t":
             break;
 
         default:
-            return 'problem with the game() function';
+            return "problem with the game() function";
     }
 
     return {
-        computer_score: computer_score,
-        player_score: player_score,
-        rounds: rounds,
+        computer: computer_score,
+        player: player_score,
+        rounds,
     };
 }
 
@@ -179,7 +181,7 @@ function check_scores(player_score, computer_score, rnds) {
                 break;
 
             default:
-                return 'Problem with the get_choice() function';
+                return "Problem with the get_choice() function";
         }
     } else if (choices.contains(final_result)) {
         choices.removeChild(final_result);
@@ -193,13 +195,16 @@ function check_scores(player_score, computer_score, rnds) {
 }
 
 function get_choice(e) {
-    let scores = game(e.target.textContent.toLowerCase());
+    const choice = e.target.closest(".card").querySelector(".type").textContent;
+    let scores = game(choice.toLowerCase());
 
-    player_score += scores.player_score;
-    computer_score += scores.computer_score;
+    DOM_el.cards_container.classList.add("chosen");
+
+    player_score += scores.player;
+    computer_score += scores.computer;
     rounds += scores.rounds;
 
-    scr.style['display'] = 'initial';
+    scr.style["display"] = "initial";
 
     c_score.textContent = `Computer: ${computer_score}`;
     p_score.textContent = `You: ${player_score}`;
@@ -217,32 +222,26 @@ let computer_score = 0;
 let rounds = 0;
 
 //
-const choices = document.querySelector('.choices');
-const scr = document.querySelector('.scores');
+const choices = document.querySelector(".choices");
+const scr = document.querySelector(".scores");
 
 //
-const final_result = document.createElement('div');
-const result_round = document.createElement('div');
+const final_result = document.createElement("div");
+const result_round = document.createElement("div");
 
-const player = document.createElement('div');
-const comp = document.createElement('div');
+const player = document.createElement("div");
+const comp = document.createElement("div");
 choices.appendChild(player);
 choices.appendChild(comp);
 //
 
-const p_score = document.createElement('div');
+const p_score = document.createElement("div");
 scr.appendChild(p_score);
 
-const c_score = document.createElement('div');
+const c_score = document.createElement("div");
 scr.appendChild(c_score);
 
 //
-const rock = document.querySelector('.rock');
-rock.addEventListener('click', get_choice);
-
-const scissors = document.querySelector('.scissors');
-scissors.addEventListener('click', get_choice);
-
-const paper = document.querySelector('.paper');
-paper.addEventListener('click', get_choice);
-//
+DOM_el.player_cards.forEach((card) =>
+    card.addEventListener("click", get_choice),
+);
