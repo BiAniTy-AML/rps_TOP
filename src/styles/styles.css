@@ -34,7 +34,7 @@ header .links img {
   display: flex;
   flex-flow: column nowrap;
   gap: 3rem;
-  margin-top: 2rem;
+  margin: 2rem 0;
 }
 .cards .player, .cards .computer {
   margin: 0 auto;
@@ -45,6 +45,20 @@ header .links img {
 .cards .player {
   gap: 1rem;
 }
+.cards .computer .type span {
+  font-size: 2rem;
+  animation: dots 2s infinite;
+  display: inline-block;
+}
+.cards .computer .type span:nth-child(1) {
+  animation-delay: 0.3s;
+}
+.cards .computer .type span:nth-child(2) {
+  animation-delay: 0.6s;
+}
+.cards .computer .type span:nth-child(3) {
+  animation-delay: 0.9s;
+}
 
 .card {
   display: flex;
@@ -53,9 +67,11 @@ header .links img {
   background: #D0C4DF;
   border-radius: 10px;
 }
+.card:not(.random):hover {
+  animation: card 3s infinite;
+}
 .card:hover {
   background: #a892c4;
-  animation: up_down 3s infinite;
 }
 .card .symbol {
   font-size: 7rem;
@@ -64,16 +80,6 @@ header .links img {
   font-size: 2rem;
 }
 
-@keyframes up_down {
-  0%, 100% {
-    transform: translateY(0);
-    transition: ease;
-  }
-  50% {
-    transform: translateY(-30px);
-    transition: ease;
-  }
-}
 @media (min-width: 500px) {
   .cards {
     display: flex;
@@ -106,6 +112,26 @@ header .links img {
   }
   .card .type {
     font-size: 2rem;
+  }
+}
+@keyframes card {
+  0%, 100% {
+    transform: translateY(0);
+    transition: ease;
+  }
+  50% {
+    transform: translateY(-30px);
+    transition: ease;
+  }
+}
+@keyframes dots {
+  0%, 100% {
+    transform: translateY(0);
+    transition: ease;
+  }
+  50% {
+    transform: translateY(-10px);
+    transition: ease;
   }
 }
 
