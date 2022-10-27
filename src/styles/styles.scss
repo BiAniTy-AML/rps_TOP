@@ -1,6 +1,32 @@
+@use './abstract/colors' as c;
+
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
     font-size: 16px;
+}
+
+body {
+    background: c.$dark_background
+}
+
+header {
+    background: c.$light_background;
+    padding: .7rem;
+
+    display: flex;
+    .game_title {
+        font-weight: bold;
+        font-size: 3rem;
+
+        margin-left: auto;
+    }
+
+    .links {
+        margin-left: auto;
+        img {
+            width: 50px;
+        }
+    }
 }

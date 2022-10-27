@@ -5,4 +5,25 @@
   font-size: 16px;
 }
 
+body {
+  background: #02182B;
+}
+
+header {
+  background: #95A3B3;
+  padding: 0.7rem;
+  display: flex;
+}
+header .game_title {
+  font-weight: bold;
+  font-size: 3rem;
+  margin-left: auto;
+}
+header .links {
+  margin-left: auto;
+}
+header .links img {
+  width: 50px;
+}
+
 /*# sourceMappingURL=styles.css.map */
