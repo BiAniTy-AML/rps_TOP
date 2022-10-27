@@ -55,6 +55,7 @@ header .links img {
 }
 .card:hover {
   background: #a892c4;
+  animation: up_down 3s infinite;
 }
 .card .symbol {
   font-size: 7rem;
@@ -63,6 +64,16 @@ header .links img {
   font-size: 2rem;
 }
 
+@keyframes up_down {
+  0%, 100% {
+    transform: translateY(0);
+    transition: ease;
+  }
+  50% {
+    transform: translateY(-30px);
+    transition: ease;
+  }
+}
 @media (min-width: 500px) {
   .cards {
     display: flex;

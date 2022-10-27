@@ -41,8 +41,6 @@ header {
 
     gap: 3rem;
 
-    // justify-content: space-between;
-    // padding: 0 2rem;
     margin-top: 2rem;
 
     .player, .computer {
@@ -67,8 +65,8 @@ header {
     border-radius: 10px;
 
     &:hover {
-        background: darken(c.$lavender, 15%) 
-
+        background: darken(c.$lavender, 15%);
+        animation: up_down 3s infinite;
     }
 
     .symbol {
@@ -80,9 +78,19 @@ header {
     }
 }
 
-@media (min-width: 500px) {
-    
+@keyframes up_down {
+    0%, 100% {
+        transform: translateY(0);
+        transition: ease;
+    }
 
+    50% {
+        transform: translateY(-30px);
+        transition: ease;
+    }
+}
+
+@media (min-width: 500px) {
     .cards {
         display: flex;
         flex-flow: column nowrap;
