@@ -49,14 +49,23 @@ header {
     }
 }
 
-.player.collapse {
+.player.collapsed {
     .card {
-        transition: transform 1s ease, opacity 1s ease;
+        transition: 
+            transform 1s ease,
+            opacity 1s ease,
+            max-height 1s ease;
+    }
+
+    .card.chosen {
+        pointer-events: none;
     }
 
     .card:not(.chosen) {
-        background: red;
         z-index: -1;
+
+        max-height: 0;
+        opacity: 0;
     }
 }
 
@@ -113,6 +122,9 @@ header {
 
     background: c.$lavender;
     border-radius: 10px;
+
+    max-height: 200vh;
+    transition: max-height 1s ease;
 
     &:not(.random):not(.chosen):hover {
         cursor: pointer;
@@ -181,4 +193,4 @@ header {
 }
 
 @include up_down_animation(card, 30px);
-@include up_down_animation(dots, 10px)
+@include up_down_animation(dots, 10px);

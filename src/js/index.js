@@ -196,45 +196,15 @@ function check_scores(player_score, computer_score, rnds) {
 
 function get_choice(e) {
     const chosen_card = e.target.closest(".card");
+
     let scores = game(
         chosen_card.querySelector(".type").textContent.toLowerCase(),
     );
 
-    const chosen_rect = chosen_card.getBoundingClientRect();
-
-    // console.log(a);
-
     chosen_card.classList.add("chosen");
-    DOM_el.player_cards_container.classList.add("collapse");
+    DOM_el.player_cards_container.classList.add("collapsed");
 
-    const cards_rect = {};
-    DOM_el.player_cards.forEach((card) => {
-        if (!card.classList.contains("chosen")) {
-            cards_rect[card.querySelector(".type").textContent] = {
-                element: card,
-                rect: card.getBoundingClientRect(),
-            };
-        }
-    });
-
-    const chosen_top = chosen_rect.top + window.scrollY;
-
-    for (const [key, value] of Object.entries(cards_rect)) {
-        const distance = chosen_top - (value.rect.top + window.scrollY);
-        console.log(distance);
-
-        value.element.setAttribute(
-            "style",
-            `transform: translateY(${distance}px); opacity: 0`,
-        );
-
-        setTimeout(() => {
-            value.element.setAttribute(
-                "style",
-                `transform: translateY(${distance}px); opacity: 0; display: none;`,
-            );
-        }, 800);
-    }
+    collapse_cards(chosen_card);
 
     player_score += scores.player;
     computer_score += scores.computer;
@@ -281,3 +251,28 @@ scr.appendChild(c_score);
 DOM_el.player_cards.forEach((card) =>
     card.addEventListener("click", get_choice),
 );
+
+const collapse_cards = (chosen_card) => {
+    const chosen_rect = chosen_card.getBoundingClientRect();
+
+    const cards_rect = {};
+    DOM_el.player_cards.forEach((card) => {
+        if (!card.classList.contains("chosen")) {
+            cards_rect[card.querySelector(".type").textContent] = {
+                element: card,
+                rect: card.getBoundingClientRect(),
+            };
+        }
+    });
+
+    const chosen_top = chosen_rect.top + window.scrollY;
+
+    for (const [key, value] of Object.entries(cards_rect)) {
+        const distance = chosen_top - (value.rect.top + window.scrollY);
+
+        value.element.setAttribute(
+            "style",
+            `transform: translateY(${distance}px);`,
+        );
+    }
+};

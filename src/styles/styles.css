@@ -30,12 +30,16 @@ header .links img {
   width: 50px;
 }
 
-.player.collapse .card {
-  transition: transform 1s ease, opacity 1s ease;
+.player.collapsed .card {
+  transition: transform 1s ease, opacity 1s ease, max-height 1s ease;
 }
-.player.collapse .card:not(.chosen) {
-  background: red;
+.player.collapsed .card.chosen {
+  pointer-events: none;
+}
+.player.collapsed .card:not(.chosen) {
   z-index: -1;
+  max-height: 0;
+  opacity: 0;
 }
 
 .cards {
@@ -74,6 +78,8 @@ header .links img {
   justify-content: center;
   background: #D0C4DF;
   border-radius: 10px;
+  max-height: 200vh;
+  transition: max-height 1s ease;
 }
 .card:not(.random):not(.chosen):hover {
   cursor: pointer;
