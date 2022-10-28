@@ -8,13 +8,16 @@ function computer_play() {
 
     switch (comp_choice) {
         case 0:
-            return "Rock";
+            return {
+                type: "Rock",
+                icon: "R",
+            };
 
         case 1:
-            return "Scissors";
+            return { type: "Scissors", icon: "S" };
 
         case 2:
-            return "Paper";
+            return { type: "Paper", icon: "P" };
 
         default:
             return "Something went wrong with the function computer_play";
@@ -29,10 +32,12 @@ function random_int(num) {
 // Simulates a round
 function play_round(player_choice) {
     // Determines the player and the computer choice
-    let computer_choice = computer_play().toLowerCase();
+    let computer_choice = computer_play();
+
+    transition_image(computer_choice);
 
     player.textContent = `You: ${player_choice}`;
-    comp.textContent = `Computer: ${computer_choice}`;
+    comp.textContent = `Computer: ${computer_choice.type.toLowerCase()}`;
 
     let res = null;
 
@@ -203,6 +208,7 @@ function get_choice(e) {
 
     chosen_card.classList.add("chosen");
     DOM_el.player_cards_container.classList.add("collapsed");
+    DOM_el.computer_card.classList.add("ready");
 
     collapse_cards(chosen_card);
 
@@ -275,4 +281,32 @@ const collapse_cards = (chosen_card) => {
             `transform: translateY(${distance}px);`,
         );
     }
+};
+
+const transition_image = (chosen) => {
+    const card = DOM_el.computer_card;
+    const { type, icon } = chosen;
+
+    const symbol_el = card.querySelector(".symbol");
+    const type_el = card.querySelector(".type");
+
+    setTimeout(() => {
+        type_el.textContent = "Rock";
+        symbol_el.textContent = "R";
+    }, 1000);
+
+    setTimeout(() => {
+        type_el.textContent = "Paper";
+        symbol_el.textContent = "P";
+    }, 2000);
+
+    setTimeout(() => {
+        type_el.textContent = "Scissors";
+        symbol_el.textContent = "S";
+    }, 3000);
+
+    setTimeout(() => {
+        type_el.textContent = type;
+        symbol_el.textContent = icon;
+    }, 4000);
 };

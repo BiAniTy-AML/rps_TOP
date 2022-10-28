@@ -20,7 +20,7 @@ header {
 }
 header .game_title {
   font-weight: bold;
-  font-size: 3rem;
+  font-size: 2rem;
   margin-left: auto;
 }
 header .links {
@@ -56,6 +56,17 @@ header .links img {
 }
 .cards .player {
   gap: 1rem;
+}
+.cards .computer {
+  overflow: hidden;
+}
+.cards .computer .card.ready .symbol {
+  animation: right_left 1.3s 4;
+  animation-timing-function: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+.cards .computer .card.ready .type {
+  animation: left_right 1.3s 4;
+  animation-timing-function: cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 .cards .computer .type span {
   font-size: 2rem;
@@ -147,6 +158,40 @@ header .links img {
   50% {
     transform: translateY(-10px);
     transition: ease;
+  }
+}
+@keyframes right_left {
+  0%, 100% {
+    transform: translateX(0);
+    opacity: 1;
+  }
+  1% {
+    display: none;
+  }
+  33% {
+    transform: translateX(-150vw);
+    opacity: 0;
+  }
+  66% {
+    transform: translateX(150vw);
+    opacity: 0;
+  }
+}
+@keyframes left_right {
+  0%, 100% {
+    transform: translateX(0);
+    opacity: 1;
+  }
+  1% {
+    display: none;
+  }
+  33% {
+    transform: translateX(150vw);
+    opacity: 0;
+  }
+  66% {
+    transform: translateX(-150vw);
+    opacity: 0;
   }
 }
 

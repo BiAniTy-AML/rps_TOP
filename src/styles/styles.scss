@@ -14,6 +14,37 @@
     }
 }
 
+@mixin side_to_side_animation ($name, $direction, $amount) {
+    @keyframes #{$name} {
+        0%, 100% {
+            transform: translateX(0);
+            opacity: 1;
+        }
+
+        1% {
+            display: none;
+        }
+
+        33% {
+            @if $direction == ltor {
+                transform: translateX($amount);
+            } @else if $direction == rtol {
+                transform: translateX(-$amount);
+            }
+            opacity: 0;
+        }
+
+        66% {
+            @if $direction == ltor {
+                transform: translateX(-$amount);
+            } @else if $direction == rtol {
+                transform: translateX($amount);
+            }
+            opacity: 0;
+        }
+    }
+}
+
 * {
     margin: 0;
     padding: 0;
@@ -36,7 +67,7 @@ header {
     display: flex;
     .game_title {
         font-weight: bold;
-        font-size: 3rem;
+        font-size: 2rem;
 
         margin-left: auto;
     }
@@ -89,6 +120,19 @@ header {
     }
 
     .computer {
+        overflow: hidden;
+        .card.ready {
+            .symbol {
+                animation: right_left 1.3s 4;
+                animation-timing-function: cubic-bezier(.25,.46,.45,.94);
+            }
+
+            .type {
+                animation: left_right 1.3s 4;
+                animation-timing-function: cubic-bezier(.25,.46,.45,.94);
+            }
+        }
+
         .type {
             span {
                 font-size: 2rem;
@@ -194,3 +238,8 @@ header {
 
 @include up_down_animation(card, 30px);
 @include up_down_animation(dots, 10px);
+
+@include side_to_side_animation(right_left, rtol, 150vw);
+@include side_to_side_animation(left_right, ltor, 150vw);
+
+
