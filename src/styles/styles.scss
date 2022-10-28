@@ -49,6 +49,17 @@ header {
     }
 }
 
+.player.collapse {
+    .card {
+        transition: transform 1s ease, opacity 1s ease;
+    }
+
+    .card:not(.chosen) {
+        background: red;
+        z-index: -1;
+    }
+}
+
 .cards {
     display: flex;
     flex-flow: column nowrap;
@@ -103,7 +114,7 @@ header {
     background: c.$lavender;
     border-radius: 10px;
 
-    &:not(.random):hover {
+    &:not(.random):not(.chosen):hover {
         cursor: pointer;
         animation: card 3s infinite;
 

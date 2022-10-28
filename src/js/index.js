@@ -195,10 +195,46 @@ function check_scores(player_score, computer_score, rnds) {
 }
 
 function get_choice(e) {
-    const choice = e.target.closest(".card").querySelector(".type").textContent;
-    let scores = game(choice.toLowerCase());
+    const chosen_card = e.target.closest(".card");
+    let scores = game(
+        chosen_card.querySelector(".type").textContent.toLowerCase(),
+    );
 
-    DOM_el.cards_container.classList.add("chosen");
+    const chosen_rect = chosen_card.getBoundingClientRect();
+
+    // console.log(a);
+
+    chosen_card.classList.add("chosen");
+    DOM_el.player_cards_container.classList.add("collapse");
+
+    const cards_rect = {};
+    DOM_el.player_cards.forEach((card) => {
+        if (!card.classList.contains("chosen")) {
+            cards_rect[card.querySelector(".type").textContent] = {
+                element: card,
+                rect: card.getBoundingClientRect(),
+            };
+        }
+    });
+
+    const chosen_top = chosen_rect.top + window.scrollY;
+
+    for (const [key, value] of Object.entries(cards_rect)) {
+        const distance = chosen_top - (value.rect.top + window.scrollY);
+        console.log(distance);
+
+        value.element.setAttribute(
+            "style",
+            `transform: translateY(${distance}px); opacity: 0`,
+        );
+
+        setTimeout(() => {
+            value.element.setAttribute(
+                "style",
+                `transform: translateY(${distance}px); opacity: 0; display: none;`,
+            );
+        }, 800);
+    }
 
     player_score += scores.player;
     computer_score += scores.computer;

@@ -30,6 +30,14 @@ header .links img {
   width: 50px;
 }
 
+.player.collapse .card {
+  transition: transform 1s ease, opacity 1s ease;
+}
+.player.collapse .card:not(.chosen) {
+  background: red;
+  z-index: -1;
+}
+
 .cards {
   display: flex;
   flex-flow: column nowrap;
@@ -67,7 +75,7 @@ header .links img {
   background: #D0C4DF;
   border-radius: 10px;
 }
-.card:not(.random):hover {
+.card:not(.random):not(.chosen):hover {
   cursor: pointer;
   animation: card 3s infinite;
 }
