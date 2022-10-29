@@ -72,6 +72,8 @@ const Game = (function () {
         computer_score += result.scores.computer;
         rounds += result.rounds;
 
+        check_scores();
+
         if (Animations.skip_animations[0]) {
             DOM_el.cards.computer.classList.toggle("skipped");
 
@@ -122,7 +124,7 @@ const Game = (function () {
             }
 
             DOM_el.cards.player.forEach((card) =>
-                card.removeEventListener("click", check_scores),
+                card.removeEventListener("click", get_player_choice),
             );
         }
 
@@ -226,7 +228,7 @@ const Game = (function () {
         DOM_el.scores.final_result.classList.remove("visible");
 
         DOM_el.cards.player.forEach((card) =>
-            card.addEventListener("click", get_choice),
+            card.addEventListener("click", get_player_choice),
         );
     };
 
