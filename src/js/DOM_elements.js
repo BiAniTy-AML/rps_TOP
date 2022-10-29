@@ -25,10 +25,12 @@ const DOM_el = (function () {
         },
     };
 
+    const skip_animations = document.querySelector("button.skip");
+
     return {
         cards,
-
         scores,
+        skip_animations,
     };
 })();
 

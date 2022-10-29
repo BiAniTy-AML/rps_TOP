@@ -165,6 +165,8 @@ function check_scores(player_score, computer_score, rnds) {
 function get_choice(e) {
     const chosen_card = e.target.closest(".card");
 
+    console.log(skip_animations);
+
     let result = game(
         chosen_card.querySelector(".type").textContent.toLowerCase(),
     );
@@ -174,7 +176,20 @@ function get_choice(e) {
     chosen_card.classList.add("chosen");
 
     DOM_el.cards.player_container.classList.add("collapsed");
-    DOM_el.cards.computer.classList.add("ready");
+
+    if (skip_animations) {
+        DOM_el.cards.computer.classList.add("skipped");
+
+        setTimeout(() => {
+            restart_round(chosen_card);
+        }, 3000);
+    } else {
+        DOM_el.cards.computer.classList.add("ready");
+
+        setTimeout(() => {
+            restart_round(chosen_card);
+        }, 6000);
+    }
 
     collapse_cards(chosen_card);
 
@@ -191,10 +206,6 @@ function get_choice(e) {
 
     DOM_el.scores.player.number.textContent = player_score;
     DOM_el.scores.computer.number.textContent = computer_score;
-
-    setTimeout(() => {
-        restart_round(chosen_card);
-    }, 6000);
 }
 
 let player_score = 0;
@@ -252,34 +263,54 @@ const transition_image = (chosen) => {
     const symbol_el = card.querySelector(".symbol");
     const type_el = card.querySelector(".type");
 
-    setTimeout(() => {
-        type_el.textContent = "Rock";
-        symbol_el.textContent = "R";
-    }, 1000);
-
-    setTimeout(() => {
-        type_el.textContent = "Paper";
-        symbol_el.textContent = "P";
-    }, 2000);
-
-    setTimeout(() => {
-        type_el.textContent = "Scissors";
-        symbol_el.textContent = "S";
-    }, 3000);
-
-    setTimeout(() => {
+    if (skip_animations) {
         type_el.textContent = type;
         symbol_el.textContent = icon;
-    }, 4000);
+    } else {
+        setTimeout(() => {
+            type_el.textContent = "Rock";
+            symbol_el.textContent = "R";
+        }, 1000);
+
+        setTimeout(() => {
+            type_el.textContent = "Paper";
+            symbol_el.textContent = "P";
+        }, 2000);
+
+        setTimeout(() => {
+            type_el.textContent = "Scissors";
+            symbol_el.textContent = "S";
+        }, 3000);
+
+        setTimeout(() => {
+            type_el.textContent = type;
+            symbol_el.textContent = icon;
+        }, 4000);
+    }
 };
 
 const main = () => {
     DOM_el.cards.player.forEach((card) =>
         card.addEventListener("click", get_choice),
     );
+
+    DOM_el.skip_animations.addEventListener("click", (e) => {
+        const button = e.target;
+        button.classList.toggle("selected");
+
+        skip_animations = !skip_animations;
+
+        if (button.classList.contains("selected")) {
+            button.textContent = "Show animations";
+        } else {
+            button.textContent = "Skip animations";
+        }
+    });
 };
 
 main();
+
+let skip_animations = false;
 
 const restart_round = (chosen_card) => {
     const comp_card = DOM_el.cards.computer;

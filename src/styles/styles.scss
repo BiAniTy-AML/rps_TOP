@@ -1,5 +1,12 @@
 @use './abstract/colors' as c;
 
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-size: 16px;
+}
+
 @mixin up_down_animation($name, $amount) {
     @keyframes #{$name} {
         0%, 100% {
@@ -45,13 +52,6 @@
     }
 }
 
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-size: 16px;
-}
-
 body {
     background: c.$dark_background
 }
@@ -80,6 +80,31 @@ header {
     }
 }
 
+button.skip {
+    background-color: darken(c.$lavender, 30%);
+    cursor: pointer;
+    border: none;
+    padding: 5px 20px 5px 10px;
+    border-radius: 5px;
+
+    position: absolute;
+
+    top: 0;
+    left: 0;
+
+    transform: translateX(-88%);
+
+    transition: transform .5s ease-out;
+
+    &.selected {
+        background-color: c.$light_purple;
+    }
+
+    &:hover {
+        transform: translateX(-3px);
+    }
+ }
+
 .player.choices.collapsed {
     .card {
         transition: 
@@ -101,6 +126,8 @@ header {
 }
 
 .cards {
+    position: relative;
+
     display: flex;
     flex-flow: column nowrap;
 
