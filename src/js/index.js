@@ -133,30 +133,33 @@ function game(player_choice) {
     };
 }
 
-function check_scores(player_score, computer_score, rnds) {
+function check_scores() {
     if (player_score === max_rounds || computer_score === max_rounds) {
+        const final_result_element = DOM_el.scores.final_result;
+        const fr_message = final_result_element.querySelector(".message");
+
+        final_result_element.classList.add("visible");
+
         switch (true) {
             case player_score === computer_score:
-                // final_result.textContent = `A tie!, you've won ${player_score} times out of ${rounds}!!!`;
-                // choices.appendChild(final_result);
+                fr_message.textContent = `A tie!, you've won ${player_score} times out of ${rounds}!!!`;
                 break;
 
             case player_score > computer_score:
-                // final_result.textContent = `Congrats, you've won ${player_score} times out of ${rounds}!!!`;
-                // choices.appendChild(final_result);
+                fr_message.textContent = `Congrats, you've won ${player_score} times out of ${rounds}!!!`;
                 break;
 
             case player_score < computer_score:
-                // final_result.textContent = `What a shame, you've lost ${computer_score} times out of ${rounds}.`;
-                // choices.appendChild(final_result);
+                fr_message.textContent = `What a shame, you've lost ${computer_score} times out of ${rounds}.`;
                 break;
 
             default:
                 return "Problem with the get_choice() function";
         }
 
-        reset_game();
-        change_score_elements();
+        DOM_el.cards.player.forEach((card) =>
+            card.removeEventListener("click", get_choice),
+        );
     }
 
     return {
@@ -215,7 +218,7 @@ let player_score = 0;
 let computer_score = 0;
 let rounds = 0;
 
-const max_rounds = 5;
+let max_rounds = 5;
 
 //
 const choices = document.querySelector(".choices");
@@ -292,6 +295,16 @@ const transition_image = (chosen) => {
     }
 };
 
+const reset_game = () => {
+    player_score = 0;
+    computer_score = 0;
+    rounds = 0;
+
+    change_score_elements();
+
+    DOM_el.scores.final_result.classList.remove("visible");
+};
+
 const main = () => {
     DOM_el.cards.player.forEach((card) =>
         card.addEventListener("click", get_choice),
@@ -311,6 +324,8 @@ const main = () => {
     });
 
     change_score_elements();
+
+    DOM_el.scores.final_result.addEventListener("click", reset_game);
 };
 
 main();
@@ -335,10 +350,4 @@ const restart_round = (chosen_card) => {
     });
 
     chosen_card.classList.remove("chosen");
-};
-
-const reset_game = () => {
-    player_score = 0;
-    computer_score = 0;
-    rounds = 0;
 };

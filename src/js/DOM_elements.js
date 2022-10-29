@@ -23,6 +23,8 @@ const DOM_el = (function () {
             name: document.querySelector(".score.computer .name"),
             number: document.querySelector(".score.computer .number"),
         },
+
+        final_result: document.querySelector(".final_result"),
     };
 
     const skip_animations = document.querySelector("button.skip");

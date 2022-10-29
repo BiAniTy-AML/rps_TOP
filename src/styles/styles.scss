@@ -87,14 +87,14 @@ button.skip {
     padding: 5px 20px 5px 10px;
     border-radius: 5px;
 
-    position: absolute;
+    position: fixed;
 
-    top: 0;
+    top: 100px;
     left: 0;
 
     transform: translateX(-88%);
 
-    transition: transform .5s ease-out;
+    transition: transform .3s ease-out;
 
     &.selected {
         background-color: c.$light_purple;
@@ -215,9 +215,13 @@ button.skip {
 }
 
 .scores {
+    user-select: none;
+
     display: flex;
     flex-flow: column nowrap;
     align-items: center;
+
+    gap: 1rem;
 
    h1 {
         font-size: 3rem;
@@ -244,6 +248,48 @@ button.skip {
             display: flex;
             flex-flow: column nowrap;
             align-items: center;
+        }
+    }
+}
+
+.final_result {
+    display: flex;
+    flex-flow: column nowrap; 
+
+    gap: 1rem;
+
+    opacity: 0;
+    max-height: 0;
+    max-width: 0;
+
+    transition: max-height 1s ease,
+                opacity 1s ease;
+
+    * {
+        font-size: 0;
+        font-weight: bold;
+        pointer-events: none;
+
+        // transition: font-size .5s ease-out;
+    }
+
+    .restart {
+        border: none;
+        padding: 0;
+        border-radius: 3px;
+        cursor: pointer;
+
+        background: c.$light_purple;
+    }
+
+    &.visible {
+        opacity: 1;
+        max-width: 200vw;
+        padding: 5px 10px;
+
+        * {
+            font-size: 2rem;
+            pointer-events: all;
         }
     }
 }
