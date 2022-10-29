@@ -30,13 +30,13 @@ header .links img {
   width: 50px;
 }
 
-.player.collapsed .card {
+.player.choices.collapsed .card {
   transition: transform 1s ease, opacity 1s ease, max-height 1s ease;
 }
-.player.collapsed .card.chosen {
+.player.choices.collapsed .card.chosen {
   pointer-events: none;
 }
-.player.collapsed .card:not(.chosen) {
+.player.choices.collapsed .card:not(.chosen) {
   z-index: -1;
   max-height: 0;
   opacity: 0;
@@ -62,11 +62,9 @@ header .links img {
 }
 .cards .computer .card.ready .symbol {
   animation: right_left 1.3s 4;
-  animation-timing-function: cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 .cards .computer .card.ready .type {
   animation: left_right 1.3s 4;
-  animation-timing-function: cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 .cards .computer .type span {
   font-size: 2rem;
@@ -106,40 +104,34 @@ header .links img {
   font-size: 2rem;
 }
 
-@media (min-width: 500px) {
-  .cards {
-    display: flex;
-    flex-flow: column nowrap;
-    gap: 3rem;
-    margin-top: 2rem;
-  }
-  .cards .player, .cards .computer {
-    margin: 0 auto;
-    min-width: 80%;
-    display: flex;
-    flex-flow: column nowrap;
-  }
-  .cards .player {
-    gap: 1rem;
-  }
-  .card {
-    display: flex;
-    flex-flow: column nowrap;
-    justify-content: center;
-    gap: 3rem;
-    background: #D0C4DF;
-    border-radius: 10px;
-  }
-  .card:hover {
-    background: #a892c4;
-  }
-  .card .symbol {
-    font-size: 15rem;
-  }
-  .card .type {
-    font-size: 2rem;
-  }
+.scores {
+  display: flex;
+  flex-flow: column nowrap;
+  align-items: center;
 }
+.scores h1 {
+  font-size: 3rem;
+}
+.scores .values {
+  display: flex;
+  justify-content: space-between;
+  padding: 0 10px;
+  align-self: stretch;
+}
+.scores .values .score {
+  display: flex;
+  flex-flow: column nowrap;
+  align-items: center;
+}
+.scores .values .score * {
+  font-size: 2rem;
+}
+.scores .values .score .number {
+  background: white;
+  padding: 5px;
+  border-radius: 13px;
+}
+
 @keyframes card {
   0%, 100% {
     transform: translateY(0);

@@ -1,14 +1,34 @@
 const DOM_el = (function () {
-    const cards_container = document.querySelector(".cards");
-    const player_cards_container = document.querySelector(".player.choices");
-    const player_cards = document.querySelectorAll(".card.choice");
-    const computer_card = document.querySelector(".computer .card");
+    const cards = {
+        container: document.querySelector(".cards"),
+        player_container: document.querySelector(".player.choices"),
+        player: document.querySelectorAll(".player .card"),
+        computer: document.querySelector(".computer .card"),
+    };
+
+    const scores = {
+        container: document.querySelector(".scores"),
+        values: document.querySelector(".values"),
+        names: document.querySelectorAll(".name"),
+        numbers: document.querySelectorAll(".number"),
+
+        player: {
+            container: document.querySelector(".score.player"),
+            name: document.querySelector(".score.player .name"),
+            number: document.querySelector(".score.player .number"),
+        },
+
+        computer: {
+            container: document.querySelector(".score.computer"),
+            name: document.querySelector(".score.computer .name"),
+            number: document.querySelector(".score.computer .number"),
+        },
+    };
 
     return {
-        cards_container,
-        player_cards_container,
-        player_cards,
-        computer_card,
+        cards,
+
+        scores,
     };
 })();
 

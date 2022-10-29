@@ -32,71 +32,39 @@ function random_int(num) {
 // Simulates a round
 function play_round(player_choice) {
     // Determines the player and the computer choice
-    let computer_choice = computer_play();
+    const computer_choice = computer_play();
+
+    const hash = {
+        rock: "scissors",
+        paper: "rock",
+        scissors: "paper",
+    };
 
     transition_image(computer_choice);
 
-    player.textContent = `You: ${player_choice}`;
-    comp.textContent = `Computer: ${computer_choice.type.toLowerCase()}`;
+    const pc_type = computer_choice.type.toLowerCase();
 
-    let res = null;
-
-    // Return the results after comparing the choices
     switch (true) {
         case player_choice === computer_choice:
-            res = "It's a tie!";
-            result_round.textContent = res;
-            choices.appendChild(result_round);
-            return res;
+            return {
+                code: 0,
+                message: "It's a tie!",
+            };
 
-        // Depending on the player's choice, compare with the computer's and call the results() function
-        case player_choice === "rock":
-            switch (computer_choice) {
-                case "scissors":
-                    res = results(player_choice, computer_choice, true);
-                    result_round.textContent = res;
-                    choices.appendChild(result_round);
-                    return res;
+        case hash[player_choice] === pc_type:
+            return {
+                code: 1,
+                message: "You won!",
+            };
 
-                case "paper":
-                    res = results(player_choice, computer_choice, false);
-                    result_round.textContent = res;
-                    choices.appendChild(result_round);
-                    return res;
-            }
-
-        case player_choice === "paper":
-            switch (computer_choice) {
-                case "scissors":
-                    res = results(player_choice, computer_choice, false);
-                    result_round.textContent = res;
-                    choices.appendChild(result_round);
-                    return res;
-
-                case "rock":
-                    res = results(player_choice, computer_choice, true);
-                    result_round.textContent = res;
-                    choices.appendChild(result_round);
-                    return res;
-            }
-
-        case player_choice === "scissors":
-            switch (computer_choice) {
-                case "rock":
-                    res = results(player_choice, computer_choice, false);
-                    result_round.textContent = res;
-                    choices.appendChild(result_round);
-                    return res;
-
-                case "paper":
-                    res = results(player_choice, computer_choice, true);
-                    result_round.textContent = res;
-                    choices.appendChild(result_round);
-                    return res;
-            }
+        case hash[pc_type] !== player_choice:
+            return {
+                code: 2,
+                message: "You lost!",
+            };
 
         default:
-            return "Problem with the play_round() function";
+            return "Error in play_round";
     }
 }
 
@@ -128,141 +96,129 @@ function game(player_choice) {
     // Changes the score depending on the winner
     let result = play_round(player_choice);
 
-    // console.log(result);
+    // 0 = tie
+    // 1 = player won
+    // 2 = computer won
+    switch (result.code) {
+        case 0:
+            break;
 
-    switch (result.substr(4, 4)) {
-        case "won!":
+        case 1:
             rounds++;
             player_score++;
             break;
 
-        case "lost":
-            computer_score++;
+        case 2:
             rounds++;
-            break;
-
-        case " a t":
+            computer_score++;
             break;
 
         default:
-            return "problem with the game() function";
+            break;
     }
 
-    return {
+    const scores = {
         computer: computer_score,
         player: player_score,
+    };
+
+    return {
+        scores,
         rounds,
     };
 }
 
 function check_scores(player_score, computer_score, rnds) {
-    if (player_score === 5 || computer_score === 5) {
+    if (player_score === max_rounds || computer_score === max_rounds) {
         switch (true) {
             case player_score === computer_score:
-                final_result.textContent = `A tie!, you've won ${player_score} times out of ${rounds}!!!`;
-                choices.appendChild(final_result);
-
-                player_score = 0;
-                computer_score = 0;
-                rnds = 0;
+                // final_result.textContent = `A tie!, you've won ${player_score} times out of ${rounds}!!!`;
+                // choices.appendChild(final_result);
                 break;
 
             case player_score > computer_score:
-                final_result.textContent = `Congrats, you've won ${player_score} times out of ${rounds}!!!`;
-                choices.appendChild(final_result);
-
-                player_score = 0;
-                computer_score = 0;
-                rnds = 0;
+                // final_result.textContent = `Congrats, you've won ${player_score} times out of ${rounds}!!!`;
+                // choices.appendChild(final_result);
                 break;
 
             case player_score < computer_score:
-                final_result.textContent = `What a shame, you've lost ${computer_score} times out of ${rounds}.`;
-                choices.appendChild(final_result);
-
-                player_score = 0;
-                computer_score = 0;
-                rnds = 0;
+                // final_result.textContent = `What a shame, you've lost ${computer_score} times out of ${rounds}.`;
+                // choices.appendChild(final_result);
                 break;
 
             default:
                 return "Problem with the get_choice() function";
         }
-    } else if (choices.contains(final_result)) {
-        choices.removeChild(final_result);
     }
+    // else if (choices.contains(final_result)) {
+    //     choices.removeChild(final_result);
+    // }
+
+    player_score = 0;
+    computer_score = 0;
+    rnds = 0;
 
     return {
-        player_score: player_score,
-        computer_score: computer_score,
-        rounds: rnds,
+        player_score,
+        computer_score,
+        rounds,
     };
 }
 
 function get_choice(e) {
     const chosen_card = e.target.closest(".card");
 
-    let scores = game(
+    let result = game(
         chosen_card.querySelector(".type").textContent.toLowerCase(),
     );
 
+    const { player, computer } = result.scores;
+
     chosen_card.classList.add("chosen");
-    DOM_el.player_cards_container.classList.add("collapsed");
-    DOM_el.computer_card.classList.add("ready");
+
+    DOM_el.cards.player_container.classList.add("collapsed");
+    DOM_el.cards.computer.classList.add("ready");
 
     collapse_cards(chosen_card);
 
-    player_score += scores.player;
-    computer_score += scores.computer;
-    rounds += scores.rounds;
-
-    scr.style["display"] = "initial";
-
-    c_score.textContent = `Computer: ${computer_score}`;
-    p_score.textContent = `You: ${player_score}`;
+    player_score += player;
+    computer_score += computer;
+    rounds += result.rounds;
 
     // Displays the final result message
-    let scrs = check_scores(player_score, computer_score, rounds);
+    const scrs = check_scores(player_score, computer_score, rounds);
 
-    player_score = scrs.player_score;
-    computer_score = scrs.computer_score;
-    rounds = scrs.rounds;
+    // player_score = scrs.player_score;
+    // computer_score = scrs.computer_score;
+    // rounds = scrs.rounds;
+
+    DOM_el.scores.player.number.textContent = player_score;
+    DOM_el.scores.computer.number.textContent = computer_score;
 }
 
 let player_score = 0;
 let computer_score = 0;
 let rounds = 0;
 
+const max_rounds = 5;
+
 //
 const choices = document.querySelector(".choices");
-const scr = document.querySelector(".scores");
 
 //
-const final_result = document.createElement("div");
-const result_round = document.createElement("div");
 
-const player = document.createElement("div");
-const comp = document.createElement("div");
-choices.appendChild(player);
-choices.appendChild(comp);
-//
+// const p_score = document.createElement("div");
+// scr.appendChild(p_score);
 
-const p_score = document.createElement("div");
-scr.appendChild(p_score);
+// const c_score = document.createElement("div");
+// scr.appendChild(c_score);
 
-const c_score = document.createElement("div");
-scr.appendChild(c_score);
-
-//
-DOM_el.player_cards.forEach((card) =>
-    card.addEventListener("click", get_choice),
-);
-
+// Animation for the cards collapsing into each other when one of them is clicked
 const collapse_cards = (chosen_card) => {
     const chosen_rect = chosen_card.getBoundingClientRect();
 
     const cards_rect = {};
-    DOM_el.player_cards.forEach((card) => {
+    DOM_el.cards.player.forEach((card) => {
         if (!card.classList.contains("chosen")) {
             cards_rect[card.querySelector(".type").textContent] = {
                 element: card,
@@ -273,7 +229,11 @@ const collapse_cards = (chosen_card) => {
 
     const chosen_top = chosen_rect.top + window.scrollY;
 
+    // Attracts the other cards into the one the was selected
+    // by overlapping their position, using their top as reference
     for (const [key, value] of Object.entries(cards_rect)) {
+        // Distance the card has to travel
+        // adds scrollY to the top to get an absolute value
         const distance = chosen_top - (value.rect.top + window.scrollY);
 
         value.element.setAttribute(
@@ -283,8 +243,9 @@ const collapse_cards = (chosen_card) => {
     }
 };
 
+// Show what the computer picked after a brief animation
 const transition_image = (chosen) => {
-    const card = DOM_el.computer_card;
+    const card = DOM_el.cards.computer;
     const { type, icon } = chosen;
 
     const symbol_el = card.querySelector(".symbol");
@@ -310,3 +271,11 @@ const transition_image = (chosen) => {
         symbol_el.textContent = icon;
     }, 4000);
 };
+
+const main = () => {
+    DOM_el.cards.player.forEach((card) =>
+        card.addEventListener("click", get_choice),
+    );
+};
+
+main();

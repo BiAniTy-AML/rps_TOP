@@ -80,7 +80,7 @@ header {
     }
 }
 
-.player.collapsed {
+.player.choices.collapsed {
     .card {
         transition: 
             transform 1s ease,
@@ -124,12 +124,10 @@ header {
         .card.ready {
             .symbol {
                 animation: right_left 1.3s 4;
-                animation-timing-function: cubic-bezier(.25,.46,.45,.94);
             }
 
             .type {
                 animation: left_right 1.3s 4;
-                animation-timing-function: cubic-bezier(.25,.46,.45,.94);
             }
         }
 
@@ -189,57 +187,46 @@ header {
     }
 }
 
+.scores {
+    display: flex;
+    flex-flow: column nowrap;
+    align-items: center;
 
-@media (min-width: 500px) {
-    .cards {
+   h1 {
+        font-size: 3rem;
+    } 
+
+    .values {
         display: flex;
-        flex-flow: column nowrap;
+        justify-content: space-between;
+        padding: 0 10px;
 
-        gap: 3rem;
+        align-self: stretch;
 
-        margin-top: 2rem;
+        .score {
+           * {
+                font-size: 2rem;
+            } 
 
-        .player, .computer {
-            margin: 0 auto;
-            min-width: 80%;
+            .number {
+                background: white;
+                padding: 5px;
+                border-radius: 13px;
+            }
+            
             display: flex;
             flex-flow: column nowrap;
-        }
-
-        .player {
-            gap: 1rem;
-        }
-
-    }
-
-    .card {
-        display: flex;
-        flex-flow: column nowrap;
-        justify-content: center;
-        gap: 3rem;
-
-        background: c.$lavender;
-        border-radius: 10px;
-
-        &:hover {
-            background: darken(c.$lavender, 15%) 
-
-        }
-
-        .symbol {
-            font-size: 15rem;
-        }
-
-        .type {
-            font-size: 2rem;
+            align-items: center;
         }
     }
 }
+
+
+// @media (min-width: 500px) {
+// }
 
 @include up_down_animation(card, 30px);
 @include up_down_animation(dots, 10px);
 
 @include side_to_side_animation(right_left, rtol, 150vw);
 @include side_to_side_animation(left_right, ltor, 150vw);
-
-
