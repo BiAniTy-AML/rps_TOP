@@ -149,14 +149,11 @@ function check_scores(player_score, computer_score, rnds) {
             default:
                 return "Problem with the get_choice() function";
         }
-    }
-    // else if (choices.contains(final_result)) {
-    //     choices.removeChild(final_result);
-    // }
 
-    player_score = 0;
-    computer_score = 0;
-    rnds = 0;
+        player_score = 0;
+        computer_score = 0;
+        rnds = 0;
+    }
 
     return {
         player_score,
@@ -194,6 +191,10 @@ function get_choice(e) {
 
     DOM_el.scores.player.number.textContent = player_score;
     DOM_el.scores.computer.number.textContent = computer_score;
+
+    setTimeout(() => {
+        restart_round(chosen_card);
+    }, 6000);
 }
 
 let player_score = 0;
@@ -279,3 +280,23 @@ const main = () => {
 };
 
 main();
+
+const restart_round = (chosen_card) => {
+    const comp_card = DOM_el.cards.computer;
+
+    comp_card.classList.remove("ready");
+
+    DOM_el.cards.player_container.classList.remove("collapsed");
+
+    comp_card.querySelector(".symbol").textContent = "?";
+    comp_card.querySelector(".type").innerHTML =
+        "Waiting <span>.</span> <span>.</span> <span>.</span>";
+
+    DOM_el.cards.player.forEach((card) => {
+        if (!card.classList.contains("chosen")) {
+            card.setAttribute("style", "");
+        }
+    });
+
+    chosen_card.classList.remove("chosen");
+};
