@@ -29,6 +29,11 @@ function random_int(num) {
     return Math.floor(Math.random() * num);
 }
 
+const change_score_elements = () => {
+    DOM_el.scores.computer.number.textContent = computer_score;
+    DOM_el.scores.player.number.textContent = player_score;
+};
+
 // Simulates a round
 function play_round(player_choice) {
     // Determines the player and the computer choice
@@ -45,7 +50,7 @@ function play_round(player_choice) {
     const pc_type = computer_choice.type.toLowerCase();
 
     switch (true) {
-        case player_choice === computer_choice:
+        case player_choice === pc_type:
             return {
                 code: 0,
                 message: "It's a tie!",
@@ -57,7 +62,7 @@ function play_round(player_choice) {
                 message: "You won!",
             };
 
-        case hash[pc_type] !== player_choice:
+        case hash[pc_type] === player_choice:
             return {
                 code: 2,
                 message: "You lost!",
@@ -150,9 +155,8 @@ function check_scores(player_score, computer_score, rnds) {
                 return "Problem with the get_choice() function";
         }
 
-        player_score = 0;
-        computer_score = 0;
-        rnds = 0;
+        reset_game();
+        change_score_elements();
     }
 
     return {
@@ -165,20 +169,22 @@ function check_scores(player_score, computer_score, rnds) {
 function get_choice(e) {
     const chosen_card = e.target.closest(".card");
 
-    console.log(skip_animations);
-
     let result = game(
         chosen_card.querySelector(".type").textContent.toLowerCase(),
     );
-
-    const { player, computer } = result.scores;
 
     chosen_card.classList.add("chosen");
 
     DOM_el.cards.player_container.classList.add("collapsed");
 
+    player_score += result.scores.player;
+    computer_score += result.scores.computer;
+    rounds += result.rounds;
+
     if (skip_animations) {
-        DOM_el.cards.computer.classList.add("skipped");
+        DOM_el.cards.computer.classList.toggle("skipped");
+
+        change_score_elements();
 
         setTimeout(() => {
             restart_round(chosen_card);
@@ -187,15 +193,15 @@ function get_choice(e) {
         DOM_el.cards.computer.classList.add("ready");
 
         setTimeout(() => {
+            change_score_elements();
+        }, 5000);
+
+        setTimeout(() => {
             restart_round(chosen_card);
-        }, 6000);
+        }, 7000);
     }
 
     collapse_cards(chosen_card);
-
-    player_score += player;
-    computer_score += computer;
-    rounds += result.rounds;
 
     // Displays the final result message
     const scrs = check_scores(player_score, computer_score, rounds);
@@ -203,9 +209,6 @@ function get_choice(e) {
     // player_score = scrs.player_score;
     // computer_score = scrs.computer_score;
     // rounds = scrs.rounds;
-
-    DOM_el.scores.player.number.textContent = player_score;
-    DOM_el.scores.computer.number.textContent = computer_score;
 }
 
 let player_score = 0;
@@ -306,6 +309,8 @@ const main = () => {
             button.textContent = "Skip animations";
         }
     });
+
+    change_score_elements();
 };
 
 main();
@@ -330,4 +335,10 @@ const restart_round = (chosen_card) => {
     });
 
     chosen_card.classList.remove("chosen");
+};
+
+const reset_game = () => {
+    player_score = 0;
+    computer_score = 0;
+    rounds = 0;
 };
