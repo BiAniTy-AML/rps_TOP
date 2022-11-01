@@ -6,7 +6,7 @@
 }
 
 body {
-  background: #02182B;
+  background: #02182b;
 }
 
 button {
@@ -14,7 +14,7 @@ button {
 }
 
 header {
-  background: #95A3B3;
+  background: #95a3b3;
   padding: 0.7rem;
   display: flex;
 }
@@ -43,22 +43,27 @@ button.skip {
   transition: transform 0.3s ease-out;
 }
 button.skip.selected {
-  background-color: #AD7BA4;
+  background-color: #ad7ba4;
 }
 button.skip:hover {
   transform: translateX(-3px);
 }
 
 .player.choices.collapsed .card {
-  transition: transform 1s ease, opacity 1s ease, max-height 1s ease;
+  transition: transform 1s ease, opacity 1s ease, max-height 1s ease, max-width 1s ease;
 }
 .player.choices.collapsed .card.chosen {
   pointer-events: none;
 }
 .player.choices.collapsed .card:not(.chosen) {
   z-index: -1;
-  max-height: 0;
   opacity: 0;
+}
+.player.choices.collapsed .card:not(.chosen).horizontal {
+  max-height: 0;
+}
+.player.choices.collapsed .card:not(.chosen).vertical {
+  max-width: 0;
 }
 
 .cards {
@@ -112,14 +117,19 @@ button.skip:hover {
   display: flex;
   flex-flow: column nowrap;
   justify-content: center;
-  background: #D0C4DF;
+  background: #d0c4df;
   border-radius: 10px;
-  max-height: 200vh;
-  transition: max-height 1s ease;
+  transition: max-height 1s ease, max-width 1s ease;
 }
 .card:not(.random):not(.chosen):hover {
   cursor: pointer;
   animation: card 3s infinite;
+}
+.card.horizontal {
+  max-height: 200vh;
+}
+.card.vertical {
+  max-width: 200vw;
 }
 .card:hover {
   background: #a892c4;
@@ -137,6 +147,7 @@ button.skip:hover {
   flex-flow: column nowrap;
   align-items: center;
   gap: 1rem;
+  color: #d0c4df;
 }
 .scores h1 {
   font-size: 3rem;
@@ -156,9 +167,10 @@ button.skip:hover {
   font-size: 2rem;
 }
 .scores .values .score .number {
-  background: white;
+  background: #bfa0c2;
   padding: 5px;
   border-radius: 13px;
+  color: black;
 }
 
 .final_result {
@@ -180,7 +192,7 @@ button.skip:hover {
   padding: 0;
   border-radius: 3px;
   cursor: pointer;
-  background: #AD7BA4;
+  background: #ad7ba4;
 }
 .final_result.visible {
   opacity: 1;
@@ -192,7 +204,7 @@ button.skip:hover {
   pointer-events: all;
 }
 
-@media (min-width: 500px) {
+@media (min-width: 600px) {
   .cards {
     flex-flow: row nowrap;
   }
@@ -205,8 +217,8 @@ button.skip:hover {
     min-width: 0;
   }
   .card {
-    min-width: 250px;
-    min-height: 300px;
+    width: 20vw;
+    height: 50vh;
   }
 }
 @keyframes card {

@@ -5,7 +5,7 @@ import Game from "./Game";
 import "../styles/styles.css";
 
 const main = () => {
-    const mq = window.matchMedia("(min-width: 500px)");
+    const mq = window.matchMedia("(min-width: 600px)");
 
     const change_direction_class = (baseline) => {
         DOM_el.cards.player.forEach((card) => {

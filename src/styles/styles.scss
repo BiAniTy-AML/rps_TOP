@@ -129,7 +129,8 @@ button.skip {
 
 .player.choices.collapsed {
     .card {
-        transition: transform 1s ease, opacity 1s ease, max-height 1s ease;
+        transition: transform 1s ease, opacity 1s ease, max-height 1s ease,
+            max-width 1s ease;
     }
 
     .card.chosen {
@@ -138,9 +139,15 @@ button.skip {
 
     .card:not(.chosen) {
         z-index: -1;
-
-        max-height: 0;
         opacity: 0;
+
+        &.horizontal {
+            max-height: 0;
+        }
+
+        &.vertical {
+            max-width: 0;
+        }
     }
 }
 
@@ -222,12 +229,19 @@ button.skip {
     background: c.$lavender;
     border-radius: 10px;
 
-    max-height: 200vh;
-    transition: max-height 1s ease;
+    transition: max-height 1s ease, max-width 1s ease;
 
     &:not(.random):not(.chosen):hover {
         cursor: pointer;
         animation: card 3s infinite;
+    }
+
+    &.horizontal {
+        max-height: 200vh;
+    }
+
+    &.vertical {
+        max-width: 200vw;
     }
 
     &:hover {
@@ -252,6 +266,8 @@ button.skip {
 
     gap: 1rem;
 
+    color: c.$lavender;
+
     h1 {
         font-size: 3rem;
     }
@@ -269,9 +285,11 @@ button.skip {
             }
 
             .number {
-                background: white;
+                background: c.$lilac;
                 padding: 5px;
                 border-radius: 13px;
+
+                color: black;
             }
 
             display: flex;
@@ -297,8 +315,6 @@ button.skip {
         font-size: 0;
         font-weight: bold;
         pointer-events: none;
-
-        // transition: font-size .5s ease-out;
     }
 
     .restart {
@@ -322,7 +338,7 @@ button.skip {
     }
 }
 
-@media (min-width: 500px) {
+@media (min-width: 600px) {
     .cards {
         flex-flow: row nowrap;
         .player.choices {
@@ -338,8 +354,8 @@ button.skip {
     }
 
     .card {
-        min-width: 250px;
-        min-height: 300px;
+        width: 20vw;
+        height: 50vh;
     }
 }
 
