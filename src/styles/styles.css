@@ -185,6 +185,22 @@ button.skip:hover {
   pointer-events: all;
 }
 
+@media (min-width: 500px) {
+  .cards {
+    flex-flow: row nowrap;
+  }
+  .cards .player.choices {
+    flex-flow: row nowrap;
+    justify-content: space-evenly;
+  }
+  .cards .player, .cards .computer {
+    min-width: 0;
+  }
+  .card {
+    min-width: 250px;
+    min-height: 300px;
+  }
+}
 @keyframes card {
   0%, 100% {
     transform: translateY(0);

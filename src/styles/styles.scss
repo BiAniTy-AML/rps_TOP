@@ -295,8 +295,26 @@ button.skip {
 }
 
 
-// @media (min-width: 500px) {
-// }
+@media (min-width: 500px) {
+    .cards {
+        flex-flow: row nowrap;
+        .player.choices {
+            flex-flow: row nowrap;
+
+            justify-content: space-evenly;
+        }
+
+        .player, .computer {
+            min-width: 0;
+        }
+
+    }
+
+    .card {
+            min-width: 250px;
+            min-height: 300px;
+    }
+}
 
 @include up_down_animation(card, 30px);
 @include up_down_animation(dots, 10px);

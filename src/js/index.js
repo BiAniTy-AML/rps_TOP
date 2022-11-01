@@ -5,6 +5,29 @@ import Game from "./Game";
 import "../styles/styles.css";
 
 const main = () => {
+    const mq = window.matchMedia("(min-width: 500px)");
+
+    const change_direction_class = (baseline) => {
+        DOM_el.cards.player.forEach((card) => {
+            if (baseline.matches) {
+                card.classList.add("vertical");
+                card.classList.remove("horizontal");
+            } else {
+                card.classList.add("horizontal");
+                card.classList.remove("vertical");
+            }
+        });
+    };
+
+    change_direction_class(mq);
+
+    // media query handler function
+    const window_change = (e) => {
+        change_direction_class(e);
+    };
+
+    mq.addEventListener("change", window_change);
+
     DOM_el.cards.player.forEach((card) =>
         card.addEventListener("click", Game.get_player_choice),
     );
