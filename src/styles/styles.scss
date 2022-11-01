@@ -1,4 +1,4 @@
-@use './abstract/colors' as c;
+@use "./abstract/colors" as c;
 
 * {
     margin: 0;
@@ -9,7 +9,8 @@
 
 @mixin up_down_animation($name, $amount) {
     @keyframes #{$name} {
-        0%, 100% {
+        0%,
+        100% {
             transform: translateY(0);
             transition: ease;
         }
@@ -21,10 +22,15 @@
     }
 }
 
-@mixin side_to_side_animation ($name, $direction, $amount) {
+@mixin slide_animation($name, $orientation, $direction, $amount) {
     @keyframes #{$name} {
-        0%, 100% {
-            transform: translateX(0);
+        0%,
+        100% {
+            @if $orientation == vertical {
+                transform: translateY(0);
+            } @else if $orientation == horizontal {
+                transform: translateX(0);
+            }
             opacity: 1;
         }
 
@@ -33,19 +39,35 @@
         }
 
         33% {
-            @if $direction == ltor {
-                transform: translateX($amount);
-            } @else if $direction == rtol {
-                transform: translateX(-$amount);
+            @if $orientation == vertical {
+                @if $direction == ud {
+                    transform: translateY($amount);
+                } @else if $direction == dp {
+                    transform: translateY(-$amount);
+                }
+            } @else if $orientation == horizontal {
+                @if $direction == ltor {
+                    transform: translateX($amount);
+                } @else if $direction == rtol {
+                    transform: translateX(-$amount);
+                }
             }
             opacity: 0;
         }
 
         66% {
-            @if $direction == ltor {
-                transform: translateX(-$amount);
-            } @else if $direction == rtol {
-                transform: translateX($amount);
+            @if $orientation == vertical {
+                @if $direction == ud {
+                    transform: translateY(-$amount);
+                } @else if $direction == du {
+                    transform: translateY($amount);
+                }
+            } @else if $orientation == horizontal {
+                @if $direction == ltor {
+                    transform: translateX(-$amount);
+                } @else if $direction == rtol {
+                    transform: translateX($amount);
+                }
             }
             opacity: 0;
         }
@@ -53,7 +75,7 @@
 }
 
 body {
-    background: c.$dark_background
+    background: c.$dark_background;
 }
 
 button {
@@ -62,7 +84,7 @@ button {
 
 header {
     background: c.$light_background;
-    padding: .7rem;
+    padding: 0.7rem;
 
     display: flex;
     .game_title {
@@ -94,7 +116,7 @@ button.skip {
 
     transform: translateX(-88%);
 
-    transition: transform .3s ease-out;
+    transition: transform 0.3s ease-out;
 
     &.selected {
         background-color: c.$light_purple;
@@ -103,14 +125,11 @@ button.skip {
     &:hover {
         transform: translateX(-3px);
     }
- }
+}
 
 .player.choices.collapsed {
     .card {
-        transition: 
-            transform 1s ease,
-            opacity 1s ease,
-            max-height 1s ease;
+        transition: transform 1s ease, opacity 1s ease, max-height 1s ease;
     }
 
     .card.chosen {
@@ -135,7 +154,8 @@ button.skip {
 
     margin: 2rem 0;
 
-    .player, .computer {
+    .player,
+    .computer {
         margin: 0 auto;
         min-width: 80%;
         display: flex;
@@ -149,12 +169,24 @@ button.skip {
     .computer {
         overflow: hidden;
         .card.ready {
-            .symbol {
-                animation: right_left 1.3s 4;
+            &.horizontal {
+                .symbol {
+                    animation: right_left 1.3s 4;
+                }
+
+                .type {
+                    animation: left_right 1.3s 4;
+                }
             }
 
-            .type {
-                animation: left_right 1.3s 4;
+            &.vertical {
+                .symbol {
+                    animation: down_up 1.3s 4;
+                }
+
+                .type {
+                    animation: up_down 1.3s 4;
+                }
             }
         }
 
@@ -164,7 +196,7 @@ button.skip {
                 animation: dots 2s infinite;
 
                 // Animation does not work if span dispaly is inline
-                display: inline-block
+                display: inline-block;
             }
 
             span:nth-child(1) {
@@ -180,8 +212,6 @@ button.skip {
             }
         }
     }
-
-
 }
 
 .card {
@@ -198,7 +228,6 @@ button.skip {
     &:not(.random):not(.chosen):hover {
         cursor: pointer;
         animation: card 3s infinite;
-
     }
 
     &:hover {
@@ -223,9 +252,9 @@ button.skip {
 
     gap: 1rem;
 
-   h1 {
+    h1 {
         font-size: 3rem;
-    } 
+    }
 
     .values {
         display: flex;
@@ -235,16 +264,16 @@ button.skip {
         align-self: stretch;
 
         .score {
-           * {
+            * {
                 font-size: 2rem;
-            } 
+            }
 
             .number {
                 background: white;
                 padding: 5px;
                 border-radius: 13px;
             }
-            
+
             display: flex;
             flex-flow: column nowrap;
             align-items: center;
@@ -254,7 +283,7 @@ button.skip {
 
 .final_result {
     display: flex;
-    flex-flow: column nowrap; 
+    flex-flow: column nowrap;
 
     gap: 1rem;
 
@@ -262,8 +291,7 @@ button.skip {
     max-height: 0;
     max-width: 0;
 
-    transition: max-height 1s ease,
-                opacity 1s ease;
+    transition: max-height 1s ease, opacity 1s ease;
 
     * {
         font-size: 0;
@@ -294,7 +322,6 @@ button.skip {
     }
 }
 
-
 @media (min-width: 500px) {
     .cards {
         flex-flow: row nowrap;
@@ -304,20 +331,23 @@ button.skip {
             justify-content: space-evenly;
         }
 
-        .player, .computer {
+        .player,
+        .computer {
             min-width: 0;
         }
-
     }
 
     .card {
-            min-width: 250px;
-            min-height: 300px;
+        min-width: 250px;
+        min-height: 300px;
     }
 }
 
 @include up_down_animation(card, 30px);
 @include up_down_animation(dots, 10px);
 
-@include side_to_side_animation(right_left, rtol, 150vw);
-@include side_to_side_animation(left_right, ltor, 150vw);
+@include slide_animation(right_left, horizontal, rtol, 150vw);
+@include slide_animation(left_right, horizontal, ltor, 150vw);
+
+@include slide_animation(up_down, vertical, ud, 30vh);
+@include slide_animation(down_up, vertical, du, 30vh);

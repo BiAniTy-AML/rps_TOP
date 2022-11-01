@@ -17,6 +17,15 @@ const main = () => {
                 card.classList.remove("vertical");
             }
         });
+
+        // TODO: remove this repetition
+        if (baseline.matches) {
+            DOM_el.cards.computer.classList.remove("horizontal");
+            DOM_el.cards.computer.classList.add("vertical");
+        } else {
+            DOM_el.cards.computer.classList.add("horizontal");
+            DOM_el.cards.computer.classList.remove("vertical");
+        }
     };
 
     change_direction_class(mq);

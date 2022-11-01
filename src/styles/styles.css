@@ -68,7 +68,8 @@ button.skip:hover {
   gap: 3rem;
   margin: 2rem 0;
 }
-.cards .player, .cards .computer {
+.cards .player,
+.cards .computer {
   margin: 0 auto;
   min-width: 80%;
   display: flex;
@@ -80,11 +81,17 @@ button.skip:hover {
 .cards .computer {
   overflow: hidden;
 }
-.cards .computer .card.ready .symbol {
+.cards .computer .card.ready.horizontal .symbol {
   animation: right_left 1.3s 4;
 }
-.cards .computer .card.ready .type {
+.cards .computer .card.ready.horizontal .type {
   animation: left_right 1.3s 4;
+}
+.cards .computer .card.ready.vertical .symbol {
+  animation: down_up 1.3s 4;
+}
+.cards .computer .card.ready.vertical .type {
+  animation: up_down 1.3s 4;
 }
 .cards .computer .type span {
   font-size: 2rem;
@@ -193,7 +200,8 @@ button.skip:hover {
     flex-flow: row nowrap;
     justify-content: space-evenly;
   }
-  .cards .player, .cards .computer {
+  .cards .player,
+.cards .computer {
     min-width: 0;
   }
   .card {
@@ -252,6 +260,39 @@ button.skip:hover {
   }
   66% {
     transform: translateX(-150vw);
+    opacity: 0;
+  }
+}
+@keyframes up_down {
+  0%, 100% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+  1% {
+    display: none;
+  }
+  33% {
+    transform: translateY(30vh);
+    opacity: 0;
+  }
+  66% {
+    transform: translateY(-30vh);
+    opacity: 0;
+  }
+}
+@keyframes down_up {
+  0%, 100% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+  1% {
+    display: none;
+  }
+  33% {
+    opacity: 0;
+  }
+  66% {
+    transform: translateY(30vh);
     opacity: 0;
   }
 }
