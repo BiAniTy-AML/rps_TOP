@@ -21,18 +21,37 @@ const Animations = (function () {
         });
 
         const chosen_top = chosen_rect.top + window.scrollY;
+        const chosen_left = chosen_rect.left + window.scrollX;
+
+        const position = DOM_el.cards.player[0].classList.contains("horizontal")
+            ? "horizontal"
+            : "vertical";
 
         // Attracts the other cards into the one the was selected
         // by overlapping their position, using their top as reference
-        for (const [key, value] of Object.entries(cards_rect)) {
+        for (const [_, value] of Object.entries(cards_rect)) {
             // Distance the card has to travel
             // adds scrollY to the top to get an absolute value
-            const distance = chosen_top - (value.rect.top + window.scrollY);
 
-            value.element.setAttribute(
-                "style",
-                `transform: translateY(${distance}px);`,
-            );
+            console.log(value.rect.left);
+
+            let distance = null;
+
+            if (position === "horizontal") {
+                distance = chosen_top - (value.rect.top + window.scrollY);
+
+                value.element.setAttribute(
+                    "style",
+                    `transform: translateY(${distance}px);`,
+                );
+            } else {
+                distance = chosen_left - (value.rect.left + window.scrollX);
+
+                value.element.setAttribute(
+                    "style",
+                    `transform: translateX(${distance}px);`,
+                );
+            }
         }
     };
 
