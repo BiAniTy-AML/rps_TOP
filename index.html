@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <script src="./main.js" defer></script>
+        <title>Rock Paper Scissors</title>
+    </head>
+    <body>
+        <header>
+            <div class="game_title">Rock paper scissors</div>
+            <div class="links">
+                <a
+                    href="https://github.com/BiAniTy-AML/Rock_paper_scissors"
+                    target="_blank"
+                >
+                    <img
+                        src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/github/github-original.svg"
+                    />
+                </a>
+            </div>
+        </header>
+
+        <div class="cards">
+            <button class="skip">Skip animations</button>
+
+            <div class="player choices">
+                <button class="choice card">
+                    <div class="symbol">R</div>
+                    <div class="type">Rock</div>
+                </button>
+
+                <button class="choice card">
+                    <div class="symbol">S</div>
+                    <div class="type">Scissors</div>
+                </button>
+
+                <button class="choice card">
+                    <div class="symbol">P</div>
+                    <div class="type">Paper</div>
+                </button>
+            </div>
+
+            <div class="computer">
+                <button class="card random">
+                    <div class="symbol">?</div>
+                    <div class="type">
+                        Waiting <span>.</span> <span>.</span> <span>.</span>
+                    </div>
+                </button>
+            </div>
+        </div>
+
+        <div class="scores">
+            <h1>Scores</h1>
+
+            <div class="values">
+                <div class="score player">
+                    <div class="name">You</div>
+                    <div class="number"></div>
+                </div>
+
+                <div class="score computer">
+                    <div class="name">Computer</div>
+                    <div class="number"></div>
+                </div>
+            </div>
+
+            <div class="final_result">
+                <div class="message"></div>
+                <button class="restart">Restart</button>
+            </div>
+        </div>
+    </body>
+</html>
