@@ -117,6 +117,7 @@ button.skip:hover {
   display: flex;
   flex-flow: column nowrap;
   justify-content: center;
+  align-items: center;
   background: #d0c4df;
   border-radius: 10px;
   transition: max-height 1s ease, max-width 1s ease;
